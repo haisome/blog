@@ -1,0 +1,151 @@
+@media screen and (min-width: 768px) {
+    div.tabs_underline {
+        border-top: 3px solid #C1EDFF;
+        clear: both;
+        margin-bottom: 10px;
+    }
+
+    ul.dashboard_tabs {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    ul.dashboard_tabs li {
+        font-size: 24px;
+        padding: 7px 15px 7px 15px;
+        float: left;
+        margin-bottom: -3px;
+        margin-top: 3px;
+    }
+
+    ul.dashboard_tabs li.active {
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        border-left: 3px solid #C1EDFF;
+        border-right: 3px solid #C1EDFF;
+        border-top: 3px solid #C1EDFF;
+        border-bottom: 4px solid #FFFFFF;
+        margin-top: 0px;
+    }
+
+    ul.dashboard_tabs li.active a {
+        color: #444444;
+        text-decoration: none;
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    ul.dashboard_tabs {
+        padding-left: 0px;
+        padding-right: 0px;
+        border-bottom: 0;
+        width: 100%;
+    }
+
+    ul.dashboard_tabs li {
+        font-size: 20px;
+        display: block !important;
+        position: relative;
+        width: 100%;
+    }
+
+    ul.dashboard_tabs li a {
+        width: 100%;
+        padding: 10px 15px;
+        border-radius: 4px;
+        display: block;
+    }
+
+    ul.dashboard_tabs li a:hover {
+        border-radius: 4px;
+        border-color: #eee;
+    }
+
+    ul.dashboard_tabs li.active a {
+        color: #333;
+        background-color: #C1EDFF;
+    }
+}
+
+
+.item_limit_form {
+    margin-left: 2ex;
+}
+
+div.dashboard_section {
+    margin-top: 1ex;
+    margin-bottom: 2ex;
+}
+
+.dashboard_section li {
+    overflow-wrap: break-word;
+}
+
+#id_add_task_form {
+    padding-top: 5px;
+    margin-bottom: 0;
+}
+
+#id_hour {
+    width: 3.5em;
+}
+
+#id_minute {
+    width: 3.5em;
+}
+
+#id_path {
+    width: 35em;
+}
+
+td {
+    white-space: nowrap;
+}
+
+#id_cpu_usage_information {
+    float: right;
+}
+
+#id_refresh_running_tasks {
+    float: right;
+}
+
+div.exposition {
+    margin-top: 40px;
+}
+
+#id_scheduled_task_list  {
+    width: auto;
+}
+
+#id_scheduled_task_list td {
+    vertical-align: baseline;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 38em;
+}
+
+.scheduled-task:not(.enabled) {
+    color: grey;
+    font-style: italic;
+}
+
+.scheduled-task:not(.enabled) .btn {
+    font-style: normal;
+}
+
+.scheduled-task.expired {
+    color: grey;
+    font-style: italic;
+}
+
+.scheduled-task.expired .btn {
+    font-style: normal;
+}
+
+.scheduled-task.expired .scheduled_task_expiry {
+    color: red;
+}

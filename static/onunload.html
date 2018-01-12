@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>浏览器对象</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+ </head>
+ <body>
+  <!--先编写好网页布局-->
+  <h2>操作成功</h2>
+  <a id="sec">5</a><a>秒后回到主页</a><a href="javascript:history.back()">返回</a>
+  <ul id="u1">
+              <li id="a">javascript</li>
+              <li id="b">jquery</li>
+              <li id="c">html</li>
+          </ul>
+          <ul id="u2">
+              <li id="d">css3</li>
+              <li id="e">php</li>
+              <li id="f">java</li>
+          </ul>
+  <script type="text/javascript">
+      function get_nextSibling(n){
+          var x=n.nextSibling;
+          while (x && x.nodeType!=1){
+              x=x.nextSibling;
+          }
+          return x;
+      }
+
+      var x=document.getElementsByTagName("li")[0];
+      document.write(x.nodeName);
+      document.write(" = ");
+      document.write(x.innerHTML);
+
+      var y=get_nextSibling(x);
+
+      while(y!=null){
+          document.write("<br />nextsibling: ");
+          document.write(y.nodeName);
+          document.write(" = ");
+          document.write(y.innerHTML);
+          y=get_nextSibling(y);
+      }
+    /*  else{
+        document.write("<br>已经是最后一个节点");
+      }
+*/
+   //获取显示秒数的元素，通过定时器来更改秒数。
+   var sec=document.getElementById("sec").innerHTML;
+  var i=5;
+ //  document.write(sec);
+function clock()
+{
+  document.getElementById("sec").innerHTML=i;
+   i=i-1;
+   if (i==0)
+   {
+     window.history.go(-1);
+   }
+   window.setTimeout(clock,1000);
+}
+ window.setTimeout(clock);
+  //通过window的location和history对象来控制网页的跳转。
+
+ </script>
+</body>
+</html>

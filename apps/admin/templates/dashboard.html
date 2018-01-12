@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block custom_js %}
+<script>
+$(document).ready(function(){
+    $("#jqueryget").click(function(){
+    //$.get("http://mas.midea.com/pre.do?alias=ic.meixin.getAttendCardrecord&empId={{request.user.midea_cardnum}}&MipType=0&midea_sso_token={{request.user.midea_ssotoken}}&MipDatetime={{today}}",function(data,status){
+    $.get("{% url 'mideaauthenticate' %}",{'getType' : 'getAttendCardrecord' },function(data,status){
+    //$.get("http://localhost:8000",function(data,status){
+    //data ='‘’<?xml version='1.0' encoding='utf-8'?><soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"><soapenv:Body><ns:getAttendCardrecordResponse xmlns:ns="http://services.webservices.com"><ns:return>[{"c_devname":"美的总部公交站","c_unitname":"美的控股_关联单位_IT外包资源管理_系统运维_应用维护模块","c_kqdatetime":"2017-06-21 14:27:46"},{"c_devname":"集团总部","c_unitname":"美的控股_关联单位_IT外包资源管理_系统运维_应用维护模块","c_kqdatetime":"2017-06-21 08:23:09"}]</ns:return></ns:getAttendCardrecordResponse></soapenv:Body></soapenv:Envelope>'
+    var cardSel = document.getElementById("cardRecord");
+    cardSel.options.length = 0;
+    res=data.slice(212,-79);
+    var res = JSON.parse(res);
+    for(var p in res){
+    console.log(res[p].c_devname,res[p].c_kqdatetime);
+  $("#cardRecord").append("<option value="+res[p].c_devname+res[p].c_kqdatetime+">"+res[p].c_devname+res[p].c_kqdatetime + "</option>");
+
+      }
+    //alert("数据：" + res + "\n状态：" + 'status');
+        });
+    });
+});
+// Converts XML to JSON
+// from: http://coursesweb.net/javascript/convert-xml-json-javascript_s2
+function XMLtoJSON() {
+  var me = this;      // stores the object instantce
+
+  // gets the content of an xml file and returns it in
+  me.fromFile = function(xml, rstr) {
+    // Cretes a instantce of XMLHttpRequest object
+    var xhttp = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+    // sets and sends the request for calling "xml"
+    xhttp.open("GET", xml ,false);
+    xhttp.send(null);
+
+    // gets the JSON string
+    var json_str = jsontoStr(setJsonObj(xhttp.responseXML));
+
+    // sets and returns the JSON object, if "rstr" undefined (not passed), else, returns JSON string
+    return (typeof(rstr) == 'undefined') ? JSON.parse(json_str) : json_str;
+  }
+
+  // returns XML DOM from string with xml content
+  me.fromStr = function(xml, rstr) {
+    // for non IE browsers
+    if(window.DOMParser) {
+      var getxml = new DOMParser();
+      var xmlDoc = getxml.parseFromString(xml,"text/xml");
+    }
+    else {
+      // for Internet Explorer
+      var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+      xmlDoc.async = "false";
+    }
+
+    // gets the JSON string
+    var json_str = jsontoStr(setJsonObj(xmlDoc));
+
+    // sets and returns the JSON object, if "rstr" undefined (not passed), else, returns JSON string
+    return (typeof(rstr) == 'undefined') ? JSON.parse(json_str) : json_str;
+  }
+
+  // receives XML DOM object, returns converted JSON object
+  var setJsonObj = function(xml) {
+    var js_obj = {};
+    if (xml.nodeType == 1) {
+      if (xml.attributes.length > 0) {
+        js_obj["@attributes"] = {};
+        for (var j = 0; j < xml.attributes.length; j++) {
+          var attribute = xml.attributes.item(j);
+          js_obj["@attributes"][attribute.nodeName] = attribute.value;
+        }
+      }
+    } else if (xml.nodeType == 3) {
+      js_obj = xml.nodeValue;
+    }
+    if (xml.hasChildNodes()) {
+      for (var i = 0; i < xml.childNodes.length; i++) {
+        var item = xml.childNodes.item(i);
+        var nodeName = item.nodeName;
+        if (typeof(js_obj[nodeName]) == "undefined") {
+          js_obj[nodeName] = setJsonObj(item);
+        } else {
+          if (typeof(js_obj[nodeName].push) == "undefined") {
+            var old = js_obj[nodeName];
+            js_obj[nodeName] = [];
+            js_obj[nodeName].push(old);
+          }
+          js_obj[nodeName].push(setJsonObj(item));
+        }
+      }
+    }
+    return js_obj;
+  }
+
+  // converts JSON object to string (human readablle).
+  // Removes '\t\r\n', rows with multiples '""', multiple empty rows, '  "",', and "  ",; replace empty [] with ""
+  var jsontoStr = function(js_obj) {
+    var rejsn = JSON.stringify(js_obj, undefined, 2).replace(/(\\t|\\r|\\n)/g, '').replace(/"",[\n\t\r\s]+""[,]*/g, '').replace(/(\n[\t\s\r]*\n)/g, '').replace(/[\s\t]{2,}""[,]{0,1}/g, '').replace(/"[\s\t]{1,}"[,]{0,1}/g, '').replace(/\[[\t\s]*\]/g, '""');
+    return (rejsn.indexOf('"parsererror": {') == -1) ? rejsn : 'Invalid XML format';
+  }
+};
+
+// creates object instantce of XMLtoJSON
+var xml2json = new XMLtoJSON();
+</script>
+
+{% endblock %}
+{% block title %}仪表板{% endblock %}
+{% block content-wrapper %}
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>仪表盘</h1>
+            <ol class="breadcrumb">
+                <li><a href="{% url 'admin:dashboard' %}"><i class="fa fa-dashboard"></i> 首页</a></li>
+                <li class="active">仪表盘</li>
+            </ol>
+        </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    <h2>Hi, {{ request.user.nick_name }}</h1>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!-- Horizontal Form -->
+                            <div class="box box-info">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Midea打卡</h3>
+                                </div>
+                                <!-- /.box-header -->
+                                <!-- form start -->
+                                <form class="form-horizontal" method="get" action="http://mas.midea.com/pre.do" enctype="multipart/form-data">
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <label for="inputNikName" class="col-sm-2 control-label">工号</label>
+
+                                            <div class="col-sm-10">
+                                                <label type="text" class="form-control" id="param" placeholder="param"  name="param">{{ request.user.midea_cardnum }}</label>
+                                                <input type="hidden" name="param" value="{{ request.user.midea_cardnum }}">
+                                                <input type="hidden" name="alias" value="ic.meixin.addMoveCard">
+                                                <input type="hidden" name="midea_sso_token" value="{{ request.user.midea_ssotoken }}">
+                                                <input type="hidden" name="type" value=0>
+                                                <input type="hidden" name="cardType" value=1>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="effCard" class="col-sm-2 control-label">打卡点</label>
+                                            <div class="col-sm-10">
+                                            <select class="form-control select2"  data-placeholder="打卡" style="width: 100%;" name="moveCardOid">
+                                                {% for effCard in effCards %}
+                                                    <option value="{{ effCard.oid }}">{{ effCard.cardName }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.box-body -->
+                                    <div class="box-footer">
+                                        <button type="submit" class="btn btn btn-primary pull-right">打卡</button>
+                                    </div>
+                                    <!-- /.box-footer -->
+                                </form>
+                            </div>
+
+                            <!-- Horizontal Form -->
+                            <div class="box box-info">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">查看记录</h3>
+                                </div>
+                                <!-- /.box-header -->
+                                <!-- form start -->
+                            <!--    <form class="form-horizontal" method="get" action="{% url 'mideaauthenticate' %}" enctype="multipart/form-data">
+                            -->
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <label for="inputNikName" class="col-sm-2 control-label">工号</label>
+
+                                            <div class="col-sm-10">
+                                                <label type="text" class="form-control" id="param" placeholder="param"  name="param">{{ request.user.midea_cardnum }}</label>
+
+                                                <input type="hidden" name="getType" value='getAttendCardrecord'>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="effCard" class="col-sm-2 control-label">记录</label>
+                                            <div class="col-sm-10">
+                                            <select class="form-control select2" id="cardRecord" data-placeholder="打卡" style="width: 100%;" name="cardRedord">
+
+                                            </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.box-body -->
+                                    <div class="box-footer">
+
+                                        <button type="submit" id='jqueryget' class="btn btn btn-primary pull-right">查看记录</button>
+                                    </div>
+                                    <!-- /.box-footer -->
+                                <!--      </form>  -->
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+        <!-- /.content -->
+    </div>
+{% endblock %}

@@ -1,0 +1,1 @@
+<?xml version='1.0' encoding='utf-8'?><soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"><soapenv:Body><ns:getAttendCardrecordResponse xmlns:ns="http://services.webservices.com"><ns:return>4</ns:return></ns:getAttendCardrecordResponse></soapenv:Body></soapenv:Envelope>
