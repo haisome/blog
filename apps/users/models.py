@@ -34,7 +34,7 @@ class UserProfile(AbstractUser):
 
 class MideaUserProfile(models.Model):
     groupid = models.CharField(max_length=100, default='default')
-    jid = models.CharField(max_length=100,default='default')
+    jid = models.CharField(max_length=100,default='default',unique= True)
     name = models.CharField(max_length=100,default='default')
     sex = models.CharField(max_length=100,default='default')
     email = models.CharField(max_length=100,default='default')
@@ -44,11 +44,11 @@ class MideaUserProfile(models.Model):
     pyinitials = models.CharField(max_length=100,default='default')
 class MideaUserGroup(models.Model):
     parentid = models.CharField(max_length=100, default='default')
-    groupid = models.CharField(max_length=100,default='default')
+    groupid = models.CharField(max_length=100,default='default',unique =True)
     weight = models.CharField(max_length=100,default='default')
     title = models.CharField(max_length=100,default='default')
 class EffCard(models.Model):
-    oid = models.CharField(max_length=100, default='default')
+    oid = models.CharField(max_length=100, default='default',unique =True)
     cardName = models.CharField(max_length=100,default='default')
 
 class EmailVerifyCode(models.Model):
