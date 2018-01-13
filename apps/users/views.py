@@ -184,7 +184,7 @@ class MideaAuthenticateView(View):
     def get(self, request):
         getType = request.GET.get('getType', '')
         if getType == 'updateMidea':
-            #parsefile()
+            parsefile()
             queryEffCard='http://mas.midea.com/pre.do?&alias=ic.meixin.queryEffectiveCardPoint&latitude=22.940521&longitude=113.226452&param=%s&type=0&midea_sso_token=%s&test=%s'
             user = UserProfile.objects.get(pk=request.user.pk)
             result = doGet('queryEffCard',queryEffCard,user.midea_cardnum,user.midea_ssotoken,[user.midea_user,user.midea_password])
