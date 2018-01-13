@@ -4,6 +4,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding("utf8")
 '''
+from django.conf import settings
 from werobot import WeRoBot
 from django.shortcuts import render
 from .tuling123 import *
@@ -41,7 +42,7 @@ def first(message):
             "今日打卡",
             "description",
             "https://secure.gravatar.com/avatar/0024710771815ef9b74881ab21ba4173?s=420",
-            "http://haisong.pythonanywhere.com/"
+            settings.HOME_PAGE_URL
         ],
     ]
 
@@ -63,7 +64,7 @@ def music(message):
             "今日打卡",
             "description",
             "https://secure.gravatar.com/avatar/0024710771815ef9b74881ab21ba4173?s=420",
-            "http://haisong.pythonanywhere.com"
+            settings.HOME_PAGE_URL
         ],
            ]
 @robot.error_page
